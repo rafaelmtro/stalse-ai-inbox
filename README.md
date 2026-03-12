@@ -12,7 +12,7 @@ The system is a monorepo containing:
 
 - **Frontend**: Next.js, TypeScript, TailwindCSS (Orange/Black theme).
 - **Backend**: FastAPI, SQLite, Gemini AI API.
-- **DevOps**: Docker Compose (optional).
+- **DevOps**: Docker Compose
 
 ## 🏃 Getting Started
 
