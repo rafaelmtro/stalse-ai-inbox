@@ -1,0 +1,44 @@
+# Project: Stalse AI Inbox
+
+**Repository:** `stalse-ai-inbox`
+**Author:** Rafael Monteiro
+
+An AI-Augmented Mini Inbox application built for the Stalse technical challenge, structured as a **monorepo**. The system focuses on delivering robust results without over-engineering, featuring automatic support ticket classification via an LLM.
+
+## Code Style
+
+- Strict TypeScript: Absolute prohibition of `any` types; usage is considered a severe fault.
+- Frontend Stack: Next.js (App Router), TypeScript, and TailwindCSS.
+- Backend Stack: Python (FastAPI).
+- Pragmatism: MVP-first approach. Focus on delivering the end-to-end flow.
+- UI/UX Design: Minimalist design, "B2B DNA". The interface must be clean, highly functional, and strictly adhere to an **Orange and Black** color palette. Focus on data density and readability.
+- Testing: Comprehensive unit testing is required for both frontend components/utilities and backend API features/LLM logic.
+- Commit Standards: Commits should follow a structured pattern (such as Conventional Commits) to improve the reading and understanding of the project's history.
+
+## Commands
+
+- `docker-compose up`: Boot both the Frontend and Backend simultaneously (Optional but recommended extra).
+- `cd frontend && npm run dev`: Start Next.js development server.
+- `cd frontend && npm run test`: Run frontend unit tests.
+- `cd backend && uvicorn main:app --reload`: Start FastAPI backend.
+- `cd backend && pytest`: Run backend unit tests.
+- `cd backend && python seed.py`: Initialize the SQLite database with 10 pre-registered tickets.
+
+## Architecture
+
+- `/` (Root): Monorepo configuration and shared setups (e.g., `docker-compose.yml`).
+- `/frontend/app`: Next.js App Router containing the main `/tickets` interface.
+- `/frontend/__tests__`: Frontend unit tests for components and utilities.
+- `/backend`: Python FastAPI application housing the core API and LLM logic.
+- `/backend/tests`: Backend unit tests for API endpoints and AI services.
+- `/backend/database`: SQLite `.db` file for simple, file-based persistence.
+- `/backend/services/ai`: Integration layer with the LLM (Gemini).
+
+## Important Notes
+
+- **Monorepo Structure:** Both the frontend and backend reside in this single repository. Keep dependency management cleanly separated between the two environments.
+- **Environment Variables & Security:** All sensitive information MUST be stored in environment variables. NEVER commit `.env` files to version control.
+- **LLM Integration:** The API key for Gemini is located in the `.env` file. The backend must intercept the `POST /tickets` message and send it to the Gemini API before saving to the database.
+- LLM Output: The AI must return a structured JSON containing a `category` and a suggested `priority` ("low" or "high") based on the message tone.
+- API Endpoints: The backend must expose `GET /tickets`, `POST /tickets` (receiving only `customer_name` and `message`), and `PATCH /tickets/{id}` (to update status or priority).
+- Documentation is Critical: The `README.md` must contain extremely clear instructions on how to run the project locally, how to execute the test suites, and how to configure the `.env` file (e.g., providing a `.env.example`).
