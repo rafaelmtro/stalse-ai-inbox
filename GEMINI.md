@@ -9,7 +9,7 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 
 - Strict TypeScript: Absolute prohibition of `any` types; usage is considered a severe fault.
 - Frontend Stack: Next.js (App Router), TypeScript, and TailwindCSS.
-- Backend Stack: Python (FastAPI).
+- Backend Stack: Python (FastAPI), using **uv** for lightning-fast package and virtual environment management.
 - Pragmatism: MVP-first approach. Focus on delivering the end-to-end flow.
 - UI/UX Design: Minimalist design, "B2B DNA". The interface must be clean, highly functional, and strictly adhere to an **Orange and Black** color palette. Focus on data density and readability.
 - Testing: Comprehensive unit testing is required for both frontend components/utilities and backend API features/LLM logic.
@@ -20,9 +20,10 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 - `docker-compose up`: Boot both the Frontend and Backend simultaneously (Optional but recommended extra).
 - `cd frontend && npm run dev`: Start Next.js development server.
 - `cd frontend && npm run test`: Run frontend unit tests.
-- `cd backend && uvicorn main:app --reload`: Start FastAPI backend.
-- `cd backend && pytest`: Run backend unit tests.
-- `cd backend && python seed.py`: Initialize the SQLite database with 10 pre-registered tickets.
+- `cd backend && uv sync`: Install backend dependencies and set up the virtual environment.
+- `cd backend && uv run uvicorn main:app --reload`: Start FastAPI backend.
+- `cd backend && uv run pytest`: Run backend unit tests.
+- `cd backend && uv run python seed.py`: Initialize the SQLite database with 10 pre-registered tickets.
 
 ## Architecture
 
