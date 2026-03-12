@@ -1,10 +1,18 @@
 import pytest
-from httpx import AsyncClient
+import pytest_asyncio
+from httpx import AsyncClient, ASGITransport
 from main import app
+from database.models import init_db
+
+@pytest_asyncio.fixture(autouse=True)
+async def setup_database():
+    await init_db()
+    yield
 
 @pytest.mark.asyncio
 async def test_create_ticket():
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
         response = await ac.post("/tickets", json={
             "customer_name": "John Doe",
             "message": "My internet is not working"
@@ -18,15 +26,17 @@ async def test_create_ticket():
 
 @pytest.mark.asyncio
 async def test_get_tickets():
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
         response = await ac.get("/tickets")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
 @pytest.mark.asyncio
 async def test_update_ticket():
+    transport = ASGITransport(app=app)
     # First create a ticket
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
         create_res = await ac.post("/tickets", json={
             "customer_name": "Jane Doe",
             "message": "Billing issue"
