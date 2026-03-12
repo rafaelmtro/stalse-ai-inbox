@@ -1,20 +1,22 @@
 import os
 import json
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
 load_dotenv()
 
 # Configure Gemini
 GEMINI_KEY = os.getenv("GEMINI_KEY")
-if GEMINI_KEY:
-    genai.configure(api_key=GEMINI_KEY)
 
 class AIService:
     def __init__(self):
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.client = genai.Client(api_key=GEMINI_KEY) if GEMINI_KEY else None
 
     async def classify_ticket(self, message: str):
+        if not self.client:
+            return {"category": "General Support", "priority": "low"}
+
         prompt = f"""
         Analyze the following customer support message and return a JSON object with:
         - "category": (e.g., Technical Support, Billing, Feature Request, General Inquiry)
@@ -26,18 +28,18 @@ class AIService:
         """
         
         try:
-            # Use synchronous call for now as the library's async support varies by version
-            # In a real high-scale app, we'd use a thread pool or a truly async client
-            response = self.model.generate_content(prompt)
+            # Use generate_content with JSON mode if supported or just standard response
+            response = self.client.models.generate_content(
+                model='gemini-2.0-flash',
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type='application/json',
+                ),
+            )
             
-            # Extract JSON from response text (cleaning any markdown blocks if present)
-            content = response.text.strip()
-            if content.startswith("```json"):
-                content = content[7:-3].strip()
-            elif content.startswith("```"):
-                content = content[3:-3].strip()
-                
-            return json.loads(content)
+            # The new SDK might return the object directly depending on how it's called
+            # but usually it's in response.text
+            return json.loads(response.text)
         except Exception as e:
             print(f"Error classifying ticket with Gemini: {e}")
             # Fallback values

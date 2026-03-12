@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from contextlib import asynccontextmanager
 
 from database.models import AsyncSessionLocal, Ticket, init_db
@@ -33,8 +33,7 @@ class TicketResponse(BaseModel):
     priority: str
     category: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Dependency to get DB session
 async def get_db():

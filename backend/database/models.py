@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
-from datetime import datetime
+from datetime import datetime, UTC
 
 DATABASE_URL = "sqlite+aiosqlite:///./database/tickets.db"
 
@@ -18,7 +18,7 @@ class Ticket(Base):
     status = Column(String, default="pending") # pending, resolved
     priority = Column(String, default="low")   # low, high
     category = Column(String)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(UTC))
 
 async def init_db():
     async with engine.begin() as conn:
