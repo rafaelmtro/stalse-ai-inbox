@@ -1,5 +1,7 @@
 # Stalse AI Inbox
 
+**Version:** `v1.0.0`
+
 Stalse AI Inbox is an AI-augmented support ticket management system built as a monorepo. It leverages a local Large Language Model (LLM) to automatically classify support tickets and provide drafted responses to customer inquiries.
 
 ## Monorepo Briefing

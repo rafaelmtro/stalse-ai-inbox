@@ -2,6 +2,7 @@
 
 **Repository:** `stalse-ai-inbox`
 **Author:** Rafael Monteiro
+**Version:** `v1.0.0` (First Stable Release)
 
 An AI-Augmented Mini Inbox application built for the Stalse technical challenge, structured as a **monorepo**. The system focuses on delivering robust results without over-engineering, featuring automatic support ticket classification and response drafting via an LLM.
 
