@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
 from pydantic import BaseModel, ConfigDict
 from contextlib import asynccontextmanager
+from datetime import datetime
 
 from database.models import AsyncSessionLocal, Ticket, init_db
 from services.ai.gemini import ai_service
@@ -47,6 +48,7 @@ class TicketResponse(BaseModel):
     status: str
     priority: str
     category: str
+    created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
 

@@ -81,7 +81,10 @@ export default function DashboardPage() {
         )}
 
         {isLoading ? (
-          <div className="text-center py-20 text-brand-text-muted">Loading metrics...</div>
+          <div className="flex flex-col items-center justify-center py-32">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-orange"></div>
+            <p className="mt-6 text-brand-text-muted text-lg animate-pulse font-medium">Analyzing metrics...</p>
+          </div>
         ) : (
           <div className="space-y-8">
             {/* Metrics Grid */}
