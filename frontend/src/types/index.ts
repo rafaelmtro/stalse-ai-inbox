@@ -5,6 +5,7 @@ export interface Ticket {
   status: 'pending' | 'resolved';
   priority: 'low' | 'high';
   category: string;
+  created_at: string;
 }
 
 export interface CreateTicketData {

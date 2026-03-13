@@ -11,7 +11,7 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 - Frontend Stack: Next.js (App Router), TypeScript, and TailwindCSS.
 - Backend Stack: Python (FastAPI), using **uv** for lightning-fast package and virtual environment management.
 - Pragmatism: MVP-first approach. Focus on delivering the end-to-end flow.
-- UI/UX Design: Minimalist design, "B2B DNA". The interface must be clean, highly functional, and strictly adhere to an **Orange and Black** color palette. Focus on data density and readability.
+- UI/UX Design: Minimalist design, "B2B DNA". The interface features a high-density table-like layout for ticket management, a status-based filter, and a modal-driven interface for creating new tickets. Strictly adheres to an **Orange and Black** color palette. Focus on data density and readability.
 - Testing: Comprehensive unit testing is required for both frontend components/utilities and backend API features/LLM logic.
 - Commit Standards: Commits should follow a structured pattern (such as Conventional Commits) to improve the reading and understanding of the project's history.
 
