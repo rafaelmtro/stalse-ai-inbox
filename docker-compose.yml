@@ -6,7 +6,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend/database:/app/database
+      - tickets_data:/app/database
+    environment:
+      - DATABASE_PATH=/app/database/tickets.db
     env_file:
       - .env
 
@@ -14,9 +16,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:8000
     ports:
       - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
     depends_on:
       - backend
+
+volumes:
+  tickets_data:

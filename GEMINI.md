@@ -38,8 +38,15 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 - `/frontend/__tests__`: Frontend unit tests for components and utilities.
 - `/backend`: Python FastAPI application housing the core API and LLM logic.
 - `/backend/tests`: Backend unit tests for API endpoints and AI services.
-- `/backend/database`: SQLite `.db` file for simple, file-based persistence.
+- `/backend/database`: SQLite `.db` file managed via a named Docker volume.
 - `/backend/services/ai`: Integration layer with the LLM (Gemini).
+
+## Database Logic
+
+The backend automatically manages its persistence layer:
+- **Automatic Initialization:** On startup, the system checks for an existing tickets database.
+- **Seeding:** If no database is found, it automatically creates one and populates it with 10 dummy records, each classified and prioritized by the AI service.
+- **Configurability:** Database location is controlled via the `DATABASE_PATH` environment variable, ensuring seamless integration with Docker volumes.
 
 ## API Documentation
 
