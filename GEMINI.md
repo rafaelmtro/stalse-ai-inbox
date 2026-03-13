@@ -7,7 +7,7 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 
 ## Code Style
 
-- Strict TypeScript: Absolute prohibition of `any` types; usage is considered a severe fault.
+- Strict TypeScript: Absolute prohibition of `any` types; usage is considered a severe fault. This is strictly enforced via `noImplicitAny: true` in TypeScript configuration and `@typescript-eslint/no-explicit-any: error` in ESLint.
 - Frontend Stack: Next.js (App Router), TypeScript, TailwindCSS, and Recharts.
 - Backend Stack: Python (FastAPI), using **uv** for lightning-fast package and virtual environment management.
 - Pragmatism: MVP-first approach. Focus on delivering the end-to-end flow.

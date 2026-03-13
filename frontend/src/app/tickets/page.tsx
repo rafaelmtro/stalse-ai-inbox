@@ -108,7 +108,7 @@ export default function TicketsPage() {
               <label className="text-xs font-medium text-brand-text-muted">FILTER BY STATUS:</label>
               <select 
                 value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
+                onChange={(e) => setStatusFilter(e.target.value as 'all' | 'pending' | 'resolved')}
                 className="bg-brand-gray border border-brand-gray-light text-brand-text text-xs rounded p-2 focus:outline-none focus:border-brand-orange cursor-pointer"
               >
                 <option value="all">All Status</option>
