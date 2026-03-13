@@ -27,3 +27,12 @@ export async function updateTicket(id: number, data: UpdateTicketData): Promise<
   if (!res.ok) throw new Error('Failed to update ticket');
   return res.json();
 }
+
+export async function draftTicketAnswer(id: number): Promise<{ draft: string }> {
+  const res = await fetch(`${API_BASE_URL}/tickets/${id}/draft`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  if (!res.ok) throw new Error('Failed to draft answer');
+  return res.json();
+}

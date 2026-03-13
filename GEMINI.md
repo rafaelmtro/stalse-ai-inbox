@@ -3,7 +3,7 @@
 **Repository:** `stalse-ai-inbox`
 **Author:** Rafael Monteiro
 
-An AI-Augmented Mini Inbox application built for the Stalse technical challenge, structured as a **monorepo**. The system focuses on delivering robust results without over-engineering, featuring automatic support ticket classification via an LLM.
+An AI-Augmented Mini Inbox application built for the Stalse technical challenge, structured as a **monorepo**. The system focuses on delivering robust results without over-engineering, featuring automatic support ticket classification and response drafting via an LLM.
 
 ## Code Style
 
@@ -11,7 +11,7 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 - Frontend Stack: Next.js (App Router), TypeScript, and TailwindCSS.
 - Backend Stack: Python (FastAPI), using **uv** for lightning-fast package and virtual environment management.
 - Pragmatism: MVP-first approach. Focus on delivering the end-to-end flow.
-- UI/UX Design: Minimalist design, "B2B DNA". The interface features a high-density table-like layout for ticket management, a status-based filter, and a modal-driven interface for creating new tickets. Strictly adheres to an **Orange and Black** color palette. Focus on data density and readability.
+- UI/UX Design: Minimalist design, "B2B DNA". The interface features a high-density table-like layout for ticket management, a status-based filter, and a modal-driven interface for both creating and viewing ticket details. Interactive rows include hover effects and AI-powered response drafting. Strictly adheres to an **Orange and Black** color palette.
 - Testing: Comprehensive unit testing is required for both frontend components/utilities and backend API features/LLM logic.
 - Commit Standards: Commits should follow a structured pattern (such as Conventional Commits) to improve the reading and understanding of the project's history.
 
@@ -67,6 +67,16 @@ The backend API is served by default at `http://localhost:8000`.
     }
     ```
 *   **Output (JSON):** The updated ticket object.
+
+### 4. Draft AI Answer
+*   **Endpoint:** `POST http://localhost:8000/tickets/{ticket_id}/draft`
+*   **Description:** Generates a drafted response for the specified ticket using AI. Only available for tickets with 'pending' status.
+*   **Output (JSON):**
+    ```json
+    {
+      "draft": "string"
+    }
+    ```
 
 ## Important Notes
 

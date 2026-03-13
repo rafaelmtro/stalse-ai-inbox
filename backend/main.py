@@ -50,6 +50,9 @@ class TicketResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+class DraftResponse(BaseModel):
+    draft: str
+
 # Dependency to get DB session
 async def get_db():
     async with AsyncSessionLocal() as session:
@@ -93,3 +96,17 @@ async def update_ticket(ticket_id: int, ticket_update: TicketUpdate, db: AsyncSe
     await db.commit()
     await db.refresh(db_ticket)
     return db_ticket
+
+@app.post("/tickets/{ticket_id}/draft", response_model=DraftResponse)
+async def draft_ticket_answer(ticket_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Ticket).filter(Ticket.id == ticket_id))
+    db_ticket = result.scalar_one_or_none()
+    
+    if not db_ticket:
+        raise HTTPException(status_code=404, detail="Ticket not found")
+    
+    if db_ticket.status == "resolved":
+        raise HTTPException(status_code=400, detail="Cannot draft an answer for a resolved ticket")
+    
+    draft = await ai_service.draft_answer(db_ticket.customer_name, db_ticket.message)
+    return {"draft": draft}

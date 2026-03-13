@@ -48,4 +48,28 @@ class AIService:
                 "priority": "low"
             }
 
+    async def draft_answer(self, customer_name: str, message: str):
+        if not self.client:
+            return "Unable to generate a draft. AI service not available."
+
+        prompt = f"""
+        You are a helpful customer support agent. 
+        Write a concise, professional, and empathetic response to the following customer message.
+        
+        Customer Name: {customer_name}
+        Customer Message: "{message}"
+        
+        Return ONLY the response text.
+        """
+        
+        try:
+            response = self.client.models.generate_content(
+                model='gemini-3.1-flash-lite-preview',
+                contents=prompt
+            )
+            return response.text.strip()
+        except Exception as e:
+            print(f"Error drafting answer with Gemini: {e}")
+            return "Sorry, I encountered an error while drafting the response. Please try again."
+
 ai_service = AIService()

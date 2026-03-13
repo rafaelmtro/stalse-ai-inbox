@@ -5,6 +5,7 @@ import { Ticket, CreateTicketData } from '@/types';
 import { fetchTickets, createTicket, updateTicket } from '@/lib/api';
 import TicketItem from '@/components/TicketItem';
 import TicketForm from '@/components/TicketForm';
+import TicketDetails from '@/components/TicketDetails';
 
 export default function TicketsPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -12,6 +13,7 @@ export default function TicketsPage() {
   const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'resolved'>('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
 
   useEffect(() => {
     loadTickets();
@@ -52,6 +54,9 @@ export default function TicketsPage() {
       setTickets((prev) => 
         prev.map(t => t.id === id ? { ...t, status } : t)
       );
+      if (selectedTicket?.id === id) {
+        setSelectedTicket({ ...selectedTicket, status });
+      }
       await updateTicket(id, { status });
     } catch (err) {
       console.error('Failed to update status', err);
@@ -64,6 +69,9 @@ export default function TicketsPage() {
       setTickets((prev) => 
         prev.map(t => t.id === id ? { ...t, priority } : t)
       );
+      if (selectedTicket?.id === id) {
+        setSelectedTicket({ ...selectedTicket, priority });
+      }
       await updateTicket(id, { priority });
     } catch (err) {
       console.error('Failed to update priority', err);
@@ -110,11 +118,19 @@ export default function TicketsPage() {
           </div>
         </header>
 
-        {/* Modal */}
+        {/* Modal: Create Ticket */}
         {isModalOpen && (
           <TicketForm 
             onSubmit={handleCreateTicket} 
             onClose={() => setIsModalOpen(false)} 
+          />
+        )}
+
+        {/* Modal: Ticket Details */}
+        {selectedTicket && (
+          <TicketDetails 
+            ticket={selectedTicket} 
+            onClose={() => setSelectedTicket(null)} 
           />
         )}
 
@@ -158,6 +174,7 @@ export default function TicketsPage() {
                     ticket={ticket}
                     onUpdateStatus={handleUpdateStatus}
                     onUpdatePriority={handleUpdatePriority}
+                    onClick={setSelectedTicket}
                   />
                 ))
               )}

@@ -6,9 +6,10 @@ interface Props {
   ticket: Ticket;
   onUpdateStatus: (id: number, status: 'pending' | 'resolved') => void;
   onUpdatePriority: (id: number, priority: 'low' | 'high') => void;
+  onClick: (ticket: Ticket) => void;
 }
 
-export default function TicketItem({ ticket, onUpdateStatus, onUpdatePriority }: Props) {
+export default function TicketItem({ ticket, onUpdateStatus, onUpdatePriority, onClick }: Props) {
   const formatDate = (dateString: string) => {
     try {
       return new Date(dateString).toLocaleString('en-US', {
@@ -23,8 +24,11 @@ export default function TicketItem({ ticket, onUpdateStatus, onUpdatePriority }:
   };
 
   return (
-    <tr className="border-b border-brand-gray hover:bg-brand-gray-dark/50 transition-colors text-sm">
-      <td className="py-4 px-2 text-brand-text-muted whitespace-nowrap">
+    <tr 
+      onClick={() => onClick(ticket)}
+      className="border-b border-brand-gray hover:bg-brand-gray-light/30 transition-all duration-200 text-sm cursor-pointer group"
+    >
+      <td className="py-4 px-4 text-brand-text-muted whitespace-nowrap">
         {formatDate(ticket.created_at)}
       </td>
       <td className="py-4 px-2 font-medium text-brand-text whitespace-nowrap">
@@ -38,7 +42,7 @@ export default function TicketItem({ ticket, onUpdateStatus, onUpdatePriority }:
           {ticket.category}
         </span>
       </td>
-      <td className="py-4 px-2">
+      <td className="py-4 px-2" onClick={(e) => e.stopPropagation()}>
         <select 
           value={ticket.priority}
           onChange={(e) => onUpdatePriority(ticket.id, e.target.value as 'low' | 'high')}
@@ -49,7 +53,7 @@ export default function TicketItem({ ticket, onUpdateStatus, onUpdatePriority }:
           <option value="high">High</option>
         </select>
       </td>
-      <td className="py-4 px-2 text-right">
+      <td className="py-4 px-2 text-right" onClick={(e) => e.stopPropagation()}>
         <select 
           value={ticket.status}
           onChange={(e) => onUpdateStatus(ticket.id, e.target.value as 'pending' | 'resolved')}
