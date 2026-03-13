@@ -3,7 +3,7 @@
 **Repository:** `stalse-ai-inbox`
 **Author:** Rafael Monteiro
 
-An AI-Augmented Mini Inbox application built for the Stalse technical challenge, structured as a **monorepo**. The system focuses on delivering robust results without over-engineering, featuring automatic support ticket classification via an LLM.
+An AI-Augmented Mini Inbox application built for the Stalse technical challenge, structured as a **monorepo**. The system focuses on delivering robust results without over-engineering, featuring automatic support ticket classification via a local LLM.
 
 ## Code Style
 
@@ -33,7 +33,7 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 - `/backend`: Python FastAPI application housing the core API and LLM logic.
 - `/backend/tests`: Backend unit tests for API endpoints and AI services.
 - `/backend/database`: SQLite `.db` file for simple, file-based persistence.
-- `/backend/services/ai`: Integration layer with the LLM (Gemini).
+- `/backend/services/ai`: Integration layer with the local LLM (Ollama).
 
 ## API Documentation
 
@@ -46,7 +46,7 @@ The backend API is served by default at `http://localhost:8000`.
 
 ### 2. Create Support Ticket
 *   **Endpoint:** `POST http://localhost:8000/tickets`
-*   **Description:** Creates a new ticket. The backend automatically classifies the `category` and `priority` using the Gemini AI service.
+*   **Description:** Creates a new ticket. The backend automatically classifies the `category` and `priority` using the Ollama AI service (`gemma3:270m`).
 *   **Input (JSON):**
     ```json
     {
@@ -72,7 +72,7 @@ The backend API is served by default at `http://localhost:8000`.
 
 - **Monorepo Structure:** Both the frontend and backend reside in this single repository. Keep dependency management cleanly separated between the two environments.
 - **Environment Variables & Security:** All sensitive information MUST be stored in environment variables. NEVER commit `.env` files to version control.
-- **LLM Integration:** The API key for Gemini is located in the `.env` file. The backend must intercept the `POST /tickets` message and send it to the Gemini API before saving to the database.
+- **LLM Integration:** The backend uses **Ollama** running locally with the **gemma3:270m** model. The backend must intercept the `POST /tickets` message and send it to the local Ollama API before saving to the database.
 - LLM Output: The AI must return a structured JSON containing a `category` and a suggested `priority` ("low" or "high") based on the message tone.
 - API Endpoints: The backend must expose `GET /tickets`, `POST /tickets` (receiving only `customer_name` and `message`), and `PATCH /tickets/{id}` (to update status or priority).
 - Documentation is Critical: The `README.md` must contain extremely clear instructions on how to run the project locally, how to execute the test suites, and how to configure the `.env` file (e.g., providing a `.env.example`).
