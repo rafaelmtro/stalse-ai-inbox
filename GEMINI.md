@@ -8,10 +8,16 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 ## Code Style
 
 - Strict TypeScript: Absolute prohibition of `any` types; usage is considered a severe fault.
-- Frontend Stack: Next.js (App Router), TypeScript, and TailwindCSS.
+- Frontend Stack: Next.js (App Router), TypeScript, TailwindCSS, and Recharts.
 - Backend Stack: Python (FastAPI), using **uv** for lightning-fast package and virtual environment management.
 - Pragmatism: MVP-first approach. Focus on delivering the end-to-end flow.
-- UI/UX Design: Minimalist design, "B2B DNA". The interface features a high-density table-like layout for ticket management, a status-based filter, and a modal-driven interface for both creating and viewing ticket details. Interactive rows include hover effects and AI-powered response drafting. Strictly adheres to an **Orange and Black** color palette.
+- UI/UX Design: Minimalist design, "B2B DNA". The interface features:
+    - High-density table-like layout for ticket management.
+    - Status-based filtering.
+    - Modal-driven interface for creating and viewing ticket details.
+    - Interactive rows with AI-powered response drafting.
+    - **Analytics Dashboard (`/dashboard`)** providing real-time metrics and category distribution charts via Recharts.
+    - Strict adherence to an **Orange and Black** color palette.
 - Testing: Comprehensive unit testing is required for both frontend components/utilities and backend API features/LLM logic.
 - Commit Standards: Commits should follow a structured pattern (such as Conventional Commits) to improve the reading and understanding of the project's history.
 
@@ -28,7 +34,7 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 ## Architecture
 
 - `/` (Root): Monorepo configuration and shared setups (e.g., `docker-compose.yml`).
-- `/frontend/app`: Next.js App Router containing the main `/tickets` interface.
+- `/frontend/app`: Next.js App Router containing `/tickets` and `/dashboard` interfaces.
 - `/frontend/__tests__`: Frontend unit tests for components and utilities.
 - `/backend`: Python FastAPI application housing the core API and LLM logic.
 - `/backend/tests`: Backend unit tests for API endpoints and AI services.

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Ticket, CreateTicketData } from '@/types';
 import { fetchTickets, createTicket, updateTicket } from '@/lib/api';
 import TicketItem from '@/components/TicketItem';
@@ -96,7 +97,14 @@ export default function TicketsPage() {
           </div>
           
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
+            <Link 
+              href="/dashboard"
+              className="bg-brand-gray hover:bg-brand-gray-light border border-brand-gray-light px-6 py-2 rounded font-medium text-brand-text transition-all text-sm"
+            >
+              ANALYTICS
+            </Link>
+
+            <div className="flex items-center gap-2 border-l border-brand-gray pl-4">
               <label className="text-xs font-medium text-brand-text-muted">FILTER BY STATUS:</label>
               <select 
                 value={statusFilter}
