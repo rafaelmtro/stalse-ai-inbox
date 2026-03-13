@@ -1,11 +1,13 @@
+import os
 import json
 import ollama
 from ollama import Client
 
 class AIService:
     def __init__(self):
-        # Default Ollama host is http://localhost:11434
-        self.client = Client()
+        # Default Ollama host is http://localhost:11434, but inside Docker it should be http://ollama:11434
+        host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        self.client = Client(host=host)
         self.model = "gemma3:270m"
 
     async def classify_ticket(self, message: str):

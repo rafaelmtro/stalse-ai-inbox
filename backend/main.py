@@ -7,7 +7,7 @@ from pydantic import BaseModel, ConfigDict
 from contextlib import asynccontextmanager
 
 from database.models import AsyncSessionLocal, Ticket, init_db
-from services.ai.ollama_service import ai_service
+from services.ai.gemini import ai_service
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -63,7 +63,7 @@ async def get_tickets(db: AsyncSession = Depends(get_db)):
 
 @app.post("/tickets", response_model=TicketResponse)
 async def create_ticket(ticket: TicketCreate, db: AsyncSession = Depends(get_db)):
-    # Classify ticket with local Ollama AI
+    # Classify ticket with Gemini AI
     ai_result = await ai_service.classify_ticket(ticket.message)
     
     new_ticket = Ticket(
