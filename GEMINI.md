@@ -72,7 +72,7 @@ The backend API is served by default at `http://localhost:8000`.
 
 - **Monorepo Structure:** Both the frontend and backend reside in this single repository. Keep dependency management cleanly separated between the two environments.
 - **Environment Variables & Security:** All sensitive information MUST be stored in environment variables. NEVER commit `.env` files to version control.
-- **LLM Integration:** The API key for Gemini is located in the `.env` file. The backend must intercept the `POST /tickets` message and send it to the Gemini API before saving to the database.
+- **LLM Integration:** The API key for Gemini is located in the `.env` file. The backend must intercept the `POST /tickets` message and send it to the Gemini API (model `gemini-3.1-flash-lite-preview`) before saving to the database.
 - LLM Output: The AI must return a structured JSON containing a `category` and a suggested `priority` ("low" or "high") based on the message tone.
 - API Endpoints: The backend must expose `GET /tickets`, `POST /tickets` (receiving only `customer_name` and `message`), and `PATCH /tickets/{id}` (to update status or priority).
 - Documentation is Critical: The `README.md` must contain extremely clear instructions on how to run the project locally, how to execute the test suites, and how to configure the `.env` file (e.g., providing a `.env.example`).

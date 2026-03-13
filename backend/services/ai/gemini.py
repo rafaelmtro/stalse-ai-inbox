@@ -30,7 +30,7 @@ class AIService:
         try:
             # Use generate_content with JSON mode if supported or just standard response
             response = self.client.models.generate_content(
-                model='gemini-2.0-flash',
+                model='gemini-3.1-flash-lite-preview',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type='application/json',
