@@ -8,6 +8,8 @@ This project is structured as a monorepo containing both the frontend and backen
 
 ## Architecture
 
+![Project Diagram](./project-diagram.png)
+
 The project follows a modular architecture designed for scalability and maintainability:
 
 *   / (Root): Contains global configuration and orchestration files, including docker-compose.yml.
