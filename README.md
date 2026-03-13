@@ -18,6 +18,14 @@ The project follows a modular architecture designed for scalability and maintain
 *   /backend/services/ai: A dedicated layer for integration with the AI service (Gemini), handling ticket classification and response drafting.
 *   /backend/database: Contains the SQLite persistence layer and SQLAlchemy models.
 
+## AI Integration
+
+This project uses Google's Gemini API for intelligent ticket processing.
+
+*   **Model:** `gemini-3.1-flash-lite-preview`
+*   **Capabilities:** Automatic ticket classification, priority suggestion, and AI-powered response drafting.
+*   **Documentation:** For more information on available models, visit the [official Gemini models site](https://ai.google.dev/gemini-api/docs/gemini-3).
+
 ## Prerequisites
 
 Before running the project, ensure you have the following installed:
