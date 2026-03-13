@@ -35,6 +35,39 @@ An AI-Augmented Mini Inbox application built for the Stalse technical challenge,
 - `/backend/database`: SQLite `.db` file for simple, file-based persistence.
 - `/backend/services/ai`: Integration layer with the LLM (Gemini).
 
+## API Documentation
+
+The backend API is served by default at `http://localhost:8000`.
+
+### 1. List All Tickets
+*   **Endpoint:** `GET http://localhost:8000/tickets`
+*   **Description:** Retrieves a list of all support tickets stored in the database.
+*   **Output (JSON):** A list of objects containing `id`, `customer_name`, `message`, `status`, `priority`, and `category`.
+
+### 2. Create Support Ticket
+*   **Endpoint:** `POST http://localhost:8000/tickets`
+*   **Description:** Creates a new ticket. The backend automatically classifies the `category` and `priority` using the Gemini AI service.
+*   **Input (JSON):**
+    ```json
+    {
+      "customer_name": "string",
+      "message": "string"
+    }
+    ```
+*   **Output (JSON):** The created ticket object including AI-generated fields.
+
+### 3. Update Support Ticket
+*   **Endpoint:** `PATCH http://localhost:8000/tickets/{ticket_id}`
+*   **Description:** Updates the `status` or `priority` of an existing ticket.
+*   **Input (JSON):**
+    ```json
+    {
+      "status": "string (optional: 'pending' or 'resolved')",
+      "priority": "string (optional: 'low' or 'high')"
+    }
+    ```
+*   **Output (JSON):** The updated ticket object.
+
 ## Important Notes
 
 - **Monorepo Structure:** Both the frontend and backend reside in this single repository. Keep dependency management cleanly separated between the two environments.
