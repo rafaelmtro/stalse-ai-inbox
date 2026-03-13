@@ -12,10 +12,10 @@ async def setup_database():
 
 @pytest.mark.asyncio
 async def test_create_ticket():
-    # Mock AI Service to avoid real API calls in tests
+    # Mock AI Service to avoid real Ollama calls in tests
     mock_ai_result = {"category": "Technical Support", "priority": "high"}
     
-    with patch("services.ai.gemini.ai_service.classify_ticket", new_callable=AsyncMock) as mock_classify:
+    with patch("services.ai.ollama_service.ai_service.classify_ticket", new_callable=AsyncMock) as mock_classify:
         mock_classify.return_value = mock_ai_result
         
         transport = ASGITransport(app=app)
@@ -45,7 +45,7 @@ async def test_update_ticket():
     # Mock AI for creation part
     mock_ai_result = {"category": "Billing", "priority": "low"}
     
-    with patch("services.ai.gemini.ai_service.classify_ticket", new_callable=AsyncMock) as mock_classify:
+    with patch("services.ai.ollama_service.ai_service.classify_ticket", new_callable=AsyncMock) as mock_classify:
         mock_classify.return_value = mock_ai_result
         
         transport = ASGITransport(app=app)

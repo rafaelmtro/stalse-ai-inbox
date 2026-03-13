@@ -1,6 +1,6 @@
 import asyncio
 from database.models import AsyncSessionLocal, Ticket, init_db
-from services.ai.gemini import ai_service
+from services.ai.ollama_service import ai_service
 
 async def seed_data():
     print("Initializing database...")
@@ -20,12 +20,9 @@ async def seed_data():
     ]
     
     async with AsyncSessionLocal() as session:
-        print(f"Seeding {len(tickets_to_seed)} tickets with AI classification...")
+        print(f"Seeding {len(tickets_to_seed)} tickets with local AI classification...")
         
         for ticket_data in tickets_to_seed:
-            # Use AI to classify each ticket
-            # Note: In a real app we might want to do this in parallel, 
-            # but for seeding 10 tickets, sequential is fine.
             print(f"Classifying ticket from {ticket_data.get('customer_name', 'Unknown')}...")
             ai_result = await ai_service.classify_ticket(ticket_data["message"])
             
