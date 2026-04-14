@@ -1,5 +1,27 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Frontend Stack
+
+- **Next.js (App Router)**: React framework for server-side rendering and static site generation.
+- **TypeScript**: Ensuring type safety across the application.
+- **TailwindCSS**: Utility-first CSS framework for rapid UI development.
+- **Recharts**: For data visualization on the dashboard.
+- **Jest & React Testing Library**: For comprehensive unit and integration testing.
+
+## Project Structure
+
+```text
+frontend/
+├── __tests__/           # Unit and integration tests (Jest)
+├── public/              # Static assets (images, icons, etc.)
+└── src/
+    ├── app/             # Next.js App Router (pages and layouts)
+    ├── components/      # Reusable UI components
+    ├── lib/             # API client and utility functions
+    ├── types/           # TypeScript type definitions
+    └── globals.css      # Global styles and Tailwind imports
+```
+
 ## Getting Started
 
 First, run the development server:

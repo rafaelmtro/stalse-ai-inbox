@@ -12,6 +12,18 @@ This project is structured as a monorepo containing both the frontend and backen
 
 ![Project Diagram](./project-diagram.png)
 
+## Project Structure
+
+```text
+.
+├── backend/             # FastAPI backend application
+├── frontend/            # Next.js frontend application
+├── docker-compose.yml   # Docker orchestration
+├── GEMINI.md            # Project rules and context
+├── README.md            # Root documentation
+└── project-diagram.png  # Architecture diagram
+```
+
 The project follows a modular architecture designed for scalability and maintainability:
 
 *   / (Root): Contains global configuration and orchestration files, including docker-compose.yml.
