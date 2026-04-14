@@ -130,5 +130,3 @@ This project enforces a strict "no any" type strategy to ensure maximum code qua
 1.  TypeScript Configuration: The noImplicitAny: true setting is enabled in tsconfig.json, preventing the compiler from inferring the any type.
 2.  ESLint Enforcement: The @typescript-eslint/no-explicit-any: error rule is active, causing the linter to fail if an explicit any is used in the codebase.
 
----
-Built by Rafael Monteiro
