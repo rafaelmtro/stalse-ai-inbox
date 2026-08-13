@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 
 from database.models import AsyncSessionLocal, Ticket, init_db
-from services.ai.gemini import ai_service
+from services.ai.spark import ai_service
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -16,7 +16,12 @@ async def lifespan(app: FastAPI):
     await init_db()
     yield
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    lifespan=lifespan,
+    title="Stalse AI Inbox API",
+    version="1.0.0",
+    description="Meta Spark 1.1 powered ticket classification (muse-spark-1.1 via https://api.meta.ai/v1)",
+)
 
 # CORS configuration
 origins = [
@@ -55,6 +60,24 @@ class TicketResponse(BaseModel):
 class DraftResponse(BaseModel):
     draft: str
 
+# Health / root endpoints — prevents {"detail":"Not Found"} on GET /
+@app.get("/", tags=["health"])
+async def root():
+    return {
+        "message": "Stalse AI Inbox API is running",
+        "docs": "/docs",
+        "health": "/health",
+        "tickets": "/tickets",
+        "model": "muse-spark-1.1",
+        "api": "https://api.meta.ai/v1",
+    }
+
+
+@app.get("/health", tags=["health"])
+async def health():
+    return {"status": "ok"}
+
+
 # Dependency to get DB session
 async def get_db():
     async with AsyncSessionLocal() as session:
@@ -68,7 +91,7 @@ async def get_tickets(db: AsyncSession = Depends(get_db)):
 
 @app.post("/tickets", response_model=TicketResponse)
 async def create_ticket(ticket: TicketCreate, db: AsyncSession = Depends(get_db)):
-    # Classify ticket with Gemini AI
+    # Classify ticket with Meta Spark 1.1 AI
     ai_result = await ai_service.classify_ticket(ticket.message)
     
     new_ticket = Ticket(

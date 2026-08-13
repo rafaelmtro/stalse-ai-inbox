@@ -39,12 +39,12 @@ coverage.xml
 
 # Environment
 .env
+.env.development
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 .env.sample
-!.env.example
 
 # IDEs
 .vscode/

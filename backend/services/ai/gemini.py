@@ -1,75 +1,20 @@
-import os
-import json
-from google import genai
-from google.genai import types
-from dotenv import load_dotenv
+"""
+Deprecated shim for backwards compatibility.
 
-load_dotenv()
+Gemini has been replaced by Meta Spark 1.1. This module re-exports the
+Meta Spark implementation so existing imports (`services.ai.gemini`) keep working.
+New code should import from `services.ai.spark`.
+"""
+import warnings
 
-# Configure Gemini
-GEMINI_KEY = os.getenv("GEMINI_KEY")
+warnings.warn(
+    "services.ai.gemini is deprecated, use services.ai.spark (Meta Spark 1.1) instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
-class AIService:
-    def __init__(self):
-        self.client = genai.Client(api_key=GEMINI_KEY) if GEMINI_KEY else None
+from .spark import ai_service, AIService  # noqa: F401
 
-    async def classify_ticket(self, message: str):
-        if not self.client:
-            return {"category": "General Support", "priority": "low"}
-
-        prompt = f"""
-        Analyze the following customer support message and return a JSON object with:
-        - "category": (e.g., Technical Support, Billing, Feature Request, General Inquiry)
-        - "priority": ("low" or "high") based on the urgency and sentiment of the message.
-
-        Message: "{message}"
-
-        Return ONLY the JSON object.
-        """
-        
-        try:
-            # Use generate_content with JSON mode if supported or just standard response
-            response = self.client.models.generate_content(
-                model='gemini-3.1-flash-lite-preview',
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type='application/json',
-                ),
-            )
-            
-            # The new SDK might return the object directly depending on how it's called
-            # but usually it's in response.text
-            return json.loads(response.text)
-        except Exception as e:
-            print(f"Error classifying ticket with Gemini: {e}")
-            # Fallback values
-            return {
-                "category": "General Support",
-                "priority": "low"
-            }
-
-    async def draft_answer(self, customer_name: str, message: str):
-        if not self.client:
-            return "Unable to generate a draft. AI service not available."
-
-        prompt = f"""
-        You are a helpful customer support agent. 
-        Write a concise, professional, and empathetic response to the following customer message.
-        
-        Customer Name: {customer_name}
-        Customer Message: "{message}"
-        
-        Return ONLY the response text.
-        """
-        
-        try:
-            response = self.client.models.generate_content(
-                model='gemini-3.1-flash-lite-preview',
-                contents=prompt
-            )
-            return response.text.strip()
-        except Exception as e:
-            print(f"Error drafting answer with Gemini: {e}")
-            return "Sorry, I encountered an error while drafting the response. Please try again."
-
-ai_service = AIService()
+# Backwards compat aliases
+from .spark import SPARK_API_KEY as GEMINI_KEY  # noqa: F401
+from .spark import MODEL_API_KEY  # noqa: F401

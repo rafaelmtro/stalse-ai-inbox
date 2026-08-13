@@ -1,6 +1,6 @@
 # Stalse AI Inbox - Backend
 
-This is the FastAPI backend for the Stalse AI Inbox system, responsible for managing support tickets and integrating with the Gemini AI service.
+This is the FastAPI backend for the Stalse AI Inbox system, responsible for managing support tickets and integrating with the Meta Spark 1.1 AI service.
 
 ## Backend Stack
 
@@ -8,7 +8,7 @@ This is the FastAPI backend for the Stalse AI Inbox system, responsible for mana
 - **Python (3.10+)**: Leveraging modern asynchronous features.
 - **uv**: Fast Python package manager and virtual environment tool.
 - **SQLite & SQLAlchemy**: Efficient and lightweight persistence layer.
-- **Gemini API**: AI-powered classification and drafting.
+- **Meta Spark 1.1 API (`muse-spark-1.1` via `openai` SDK `base_url="https://api.meta.ai/v1"`)**: AI-powered classification and drafting.
 - **pytest**: Robust testing framework for units and API integration.
 
 ## Project Structure
@@ -17,7 +17,7 @@ This is the FastAPI backend for the Stalse AI Inbox system, responsible for mana
 backend/
 ├── database/            # SQLAlchemy models and SQLite setup
 ├── services/
-│   └── ai/              # Gemini integration layer
+│   └── ai/              # Meta Spark 1.1 integration layer (spark.py)
 ├── tests/               # API and unit test suite
 ├── main.py              # Application entry point (FastAPI)
 ├── pyproject.toml       # Dependencies and project metadata (uv)
@@ -33,9 +33,9 @@ To run the backend independently, follow these steps:
     ```bash
     uv sync
     ```
-3.  **Environment Variables**: Create a `.env` file with your Gemini API Key:
+3.  **Environment Variables**: Create a `.env.development` file in the project root with your Meta Spark 1.1 API Key (`MODEL_API_KEY` for `https://api.meta.ai/v1`):
     ```
-    GEMINI_KEY=your_api_key_here
+    MODEL_API_KEY=your_api_key_here
     ```
 4.  **Seed the database**:
     ```bash

@@ -1,6 +1,6 @@
 import asyncio
 from database.models import AsyncSessionLocal, Ticket, init_db
-from services.ai.gemini import ai_service
+from services.ai.spark import ai_service
 
 async def seed_data():
     print("Initializing database...")

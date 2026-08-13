@@ -1,10 +1,19 @@
 import os
 import asyncio
+from pathlib import Path
+from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.future import select
 from datetime import datetime, UTC
+
+# Load .env.development from project root for local dev
+# backend/database/models.py -> parents[2] = repo root
+_ROOT_ENV = Path(__file__).resolve().parents[2] / ".env.development"
+load_dotenv(dotenv_path=_ROOT_ENV, override=False)
+load_dotenv(dotenv_path=Path(__file__).resolve().parent.parent / ".env.development", override=False)
+load_dotenv(override=False)
 
 DATABASE_PATH = os.getenv("DATABASE_PATH", "./database/tickets.db")
 DATABASE_URL = f"sqlite+aiosqlite:///{DATABASE_PATH}"
@@ -32,7 +41,7 @@ async def init_db():
     
     if not db_exists:
         print("Database not found. Creating and seeding initial data...")
-        from services.ai.gemini import ai_service
+        from services.ai.spark import ai_service
         
         tickets_to_seed = [
             {"customer_name": "Alice Smith", "message": "I can't log in to my account. It says 'invalid credentials' even after a password reset."},

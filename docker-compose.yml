@@ -10,14 +10,14 @@ services:
     environment:
       - DATABASE_PATH=/app/database/tickets.db
     env_file:
-      - .env
+      - .env.development
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - NEXT_PUBLIC_API_URL=http://localhost:8000
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8000}
     ports:
       - "3000:3000"
     depends_on:

@@ -19,7 +19,7 @@ This project is structured as a monorepo containing both the frontend and backen
 ├── backend/             # FastAPI backend application
 ├── frontend/            # Next.js frontend application
 ├── docker-compose.yml   # Docker orchestration
-├── GEMINI.md            # Project rules and context
+├── AGENTS.md            # Project rules and context
 ├── README.md            # Root documentation
 └── project-diagram.png  # Architecture diagram
 ```
@@ -29,34 +29,35 @@ The project follows a modular architecture designed for scalability and maintain
 *   / (Root): Contains global configuration and orchestration files, including docker-compose.yml.
 *   /frontend: A Next.js (App Router) application utilizing TypeScript, TailwindCSS, and Recharts for data visualization.
 *   /backend: A FastAPI (Python) application responsible for the core business logic and API endpoints.
-*   /backend/services/ai: A dedicated layer for integration with the AI service (Gemini), handling ticket classification and response drafting.
+*   /backend/services/ai: A dedicated layer for integration with the AI service (Meta Spark 1.1), handling ticket classification and response drafting.
 *   /backend/database: Contains the SQLite persistence layer and SQLAlchemy models.
 
 ## AI Integration
 
-This project uses Google's Gemini API for intelligent ticket processing.
+This project uses Meta Spark 1.1 for intelligent ticket processing.
 
-*   **Model:** `gemini-3.1-flash-lite-preview`
+*   **Model:** `muse-spark-1.1`
 *   **Capabilities:** Automatic ticket classification, priority suggestion, and AI-powered response drafting.
-*   **Documentation:** For more information on available models, visit the [official Gemini models site](https://ai.google.dev/gemini-api/docs/gemini-3).
+*   **Integration:** Via `backend/services/ai/spark.py` using `openai` SDK (`base_url="https://api.meta.ai/v1"`, `api_key=MODEL_API_KEY`) with `MODEL_API_KEY` (also accepts `SPARK_API_KEY` / `META_SPARK_API_KEY` / `LLM_API_KEY`) from `.env.development` at `https://api.meta.ai/v1` (`Authorization: Bearer $MODEL_API_KEY`).
 
 ## Prerequisites
 
 Before running the project, ensure you have the following installed:
 
 *   Docker and Docker Compose
-*   A Gemini API Key
+*   A Meta Spark 1.1 API Key
 
 ## Getting Started
 
 Follow these steps to run the project locally:
 
 1.  Clone the repository to your local machine.
-2.  Create a .env file in the root directory of the project.
-3.  Add your Gemini API key to the .env file as follows:
+2.  Create a `.env.development` file in the root directory of the project.
+3.  Add your Meta Spark 1.1 API key to the `.env.development` file as follows:
     ```
-    GEMINI_KEY=your_api_key_here
+    MODEL_API_KEY=your_api_key_here
     ```
+    The key is sent as `Authorization: Bearer $MODEL_API_KEY` to `https://api.meta.ai/v1`.
 4.  Execute the following command to start both the frontend and backend services:
     ```bash
     docker-compose up
