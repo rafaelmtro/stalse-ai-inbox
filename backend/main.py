@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     lifespan=lifespan,
-    title="Stalse AI Inbox API",
+    title="LLM Email Sorter API",
     version="1.0.0",
     description="Meta Spark 1.1 powered ticket classification (muse-spark-1.1 via https://api.meta.ai/v1)",
 )
@@ -64,7 +64,7 @@ class DraftResponse(BaseModel):
 @app.get("/", tags=["health"])
 async def root():
     return {
-        "message": "Stalse AI Inbox API is running",
+        "message": "LLM Email Sorter API is running",
         "docs": "/docs",
         "health": "/health",
         "tickets": "/tickets",

@@ -1,8 +1,8 @@
-# Stalse AI Inbox
+# LLM Email Sorter
 
 **Version:** `v1.0.0`
 
-Stalse AI Inbox is an AI-augmented support ticket management system built as a monorepo. It leverages a local Large Language Model (LLM) to automatically classify support tickets and provide drafted responses to customer inquiries.
+LLM Email Sorter is an AI-Augmented Inbox support ticket management system built as a monorepo. It leverages Meta Spark 1.1 (Large Language Model) to automatically classify support tickets and provide drafted responses to customer inquiries.
 
 ## Monorepo Briefing
 

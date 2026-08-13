@@ -1,6 +1,6 @@
-# Stalse AI Inbox - Backend
+# LLM Email Sorter - Backend
 
-This is the FastAPI backend for the Stalse AI Inbox system, responsible for managing support tickets and integrating with the Meta Spark 1.1 AI service.
+This is the FastAPI backend for the LLM Email Sorter system, responsible for managing support tickets and integrating with the Meta Spark 1.1 AI service.
 
 ## Backend Stack
 
